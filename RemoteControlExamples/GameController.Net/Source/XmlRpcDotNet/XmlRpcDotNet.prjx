@@ -1,0 +1,57 @@
+<Project name="XmlRpcDotNet" standardNamespace="XmlRpcDotNet" description="" newfilesearch="None" enableviewstate="True" version="1.1" projecttype="C#" xmlns:convtool="urn:convtool">
+  <Contents>
+    <File name=".\AssemblyBuildNumber.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\XmlRpcProxyCodeGen.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcAsyncResult.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcBeginAttribute.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcClientFormatterSink.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcClientFormatterSinkProvider.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcClientProtocol.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcEndAttribute.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcException.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcFaultException.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcProxyGen.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcRequest.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcResponse.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcSerializer.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcServiceAttribute.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcServiceInfo.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\XmlRpcUrlAttribute.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Config\AssemblyInfo.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Config\util.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Http\IHttpRequest.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Http\IHttpRequestHandler.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Http\IHttpResponse.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Http\XmlRpcHttpRequest.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Http\XmlRpcHttpResponse.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Param\XmlRpcBoolean.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Param\XmlRpcDateTime.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Param\XmlRpcDouble.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Param\XmlRpcInt.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Param\XmlRpcMemberAttribute.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Param\XmlRpcMethodAttribute.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Param\XmlRpcMethodInfo.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Param\XmlRpcMissingMappingAttribute.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Param\XmlRpcParameterAttribute.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Param\XmlRpcParameterInfo.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Param\XmlRpcReturnValueAttribute.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Param\XmlRpcStruct.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Socket\XmlRpcSocket.cs" buildaction="Compile" subtype="Code" />
+    <File name=".\Base\CookComputing.XmlRpc.XmlRpcClientProtocol.resources" buildaction="EmbedAsResource" subtype="Code" />
+  </Contents>
+  <DeploymentInformation target="" script="" strategy="File" />
+  <Configurations active="Debug">
+    <Configuration runwithwarnings="True" name="Debug">
+      <CodeGeneration runtime="MsNet" compiler="Csc" warninglevel="4" includedebuginformation="True" optimize="False" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="Library" definesymbols="DEBUG;TRACE" generatexmldocumentation="False" win32Icon="" />
+      <Execution commandlineparameters="" consolepause="True" />
+      <Output directory=".\bin\Debug\" assembly="XmlRpcDotNet" />
+    </Configuration>
+    <Configuration runwithwarnings="True" name="Release">
+      <CodeGeneration runtime="MsNet" compiler="Csc" warninglevel="4" includedebuginformation="False" optimize="True" unsafecodeallowed="False" generateoverflowchecks="False" mainclass="" target="Library" definesymbols="TRACE" generatexmldocumentation="False" win32Icon="" />
+      <Execution commandlineparameters="" consolepause="True" />
+      <Output directory=".\bin\Release\" assembly="XmlRpcDotNet" />
+    </Configuration>
+  </Configurations>
+  <References>
+  </References>
+</Project>
