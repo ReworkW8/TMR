@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+-->
+<leagues count="0">
+  <!--
+  Example:
+  <league id="1">
+    <n>Community League</n>
+    <description>Friendly competition</description>
+    <nation>World</nation>
+    <url></url>
+  </league>
+  -->
+</leagues>

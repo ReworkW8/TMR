@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<zones>
+  <zone id="1" name="World" path="World">
+
+    <!-- ══════════════  EUROPE  ══════════════ -->
+    <zone id="2" name="Europe" path="World|Europe">
+      <zone id="10"  name="Germany"           path="World|Europe|Germany">
+        <zone id="1010" name="Bayern"          path="World|Europe|Germany|Bayern"/>
+        <zone id="1011" name="NRW"             path="World|Europe|Germany|NRW"/>
+        <zone id="1012" name="Sachsen"         path="World|Europe|Germany|Sachsen"/>
+        <zone id="1013" name="Baden-Württemberg" path="World|Europe|Germany|Baden-Württemberg"/>
+        <zone id="1014" name="Hessen"          path="World|Europe|Germany|Hessen"/>
+        <zone id="1015" name="Berlin"          path="World|Europe|Germany|Berlin"/>
+        <zone id="1016" name="Hamburg"         path="World|Europe|Germany|Hamburg"/>
+      </zone>
+      <zone id="11"  name="France"             path="World|Europe|France">
+        <zone id="1110" name="Île-de-France"   path="World|Europe|France|Île-de-France"/>
+        <zone id="1111" name="Provence"        path="World|Europe|France|Provence"/>
+        <zone id="1112" name="Bretagne"        path="World|Europe|France|Bretagne"/>
+        <zone id="1113" name="Normandie"       path="World|Europe|France|Normandie"/>
+        <zone id="1114" name="Alsace"          path="World|Europe|France|Alsace"/>
+      </zone>
+      <zone id="12"  name="United Kingdom"     path="World|Europe|United Kingdom">
+        <zone id="1210" name="England"         path="World|Europe|United Kingdom|England"/>
+        <zone id="1211" name="Scotland"        path="World|Europe|United Kingdom|Scotland"/>
+        <zone id="1212" name="Wales"           path="World|Europe|United Kingdom|Wales"/>
+        <zone id="1213" name="Northern Ireland" path="World|Europe|United Kingdom|Northern Ireland"/>
+      </zone>
+      <zone id="13"  name="Spain"              path="World|Europe|Spain">
+        <zone id="1310" name="Catalonia"       path="World|Europe|Spain|Catalonia"/>
+        <zone id="1311" name="Madrid"          path="World|Europe|Spain|Madrid"/>
+        <zone id="1312" name="Andalusia"       path="World|Europe|Spain|Andalusia"/>
+      </zone>
+      <zone id="14"  name="Italy"              path="World|Europe|Italy">
+        <zone id="1410" name="Lombardy"        path="World|Europe|Italy|Lombardy"/>
+        <zone id="1411" name="Lazio"           path="World|Europe|Italy|Lazio"/>
+        <zone id="1412" name="Sicily"          path="World|Europe|Italy|Sicily"/>
+      </zone>
+      <zone id="15"  name="Netherlands"        path="World|Europe|Netherlands"/>
+      <zone id="16"  name="Belgium"            path="World|Europe|Belgium">
+        <zone id="1610" name="Flanders"        path="World|Europe|Belgium|Flanders"/>
+        <zone id="1611" name="Wallonia"        path="World|Europe|Belgium|Wallonia"/>
+        <zone id="1612" name="Brussels"        path="World|Europe|Belgium|Brussels"/>
+      </zone>
+      <zone id="17"  name="Sweden"             path="World|Europe|Sweden"/>
+      <zone id="18"  name="Norway"             path="World|Europe|Norway"/>
+      <zone id="19"  name="Denmark"            path="World|Europe|Denmark"/>
+      <zone id="20"  name="Finland"            path="World|Europe|Finland"/>
+      <zone id="21"  name="Poland"             path="World|Europe|Poland"/>
+      <zone id="22"  name="Austria"            path="World|Europe|Austria"/>
+      <zone id="23"  name="Switzerland"        path="World|Europe|Switzerland"/>
+      <zone id="24"  name="Portugal"           path="World|Europe|Portugal"/>
+      <zone id="25"  name="Czech Republic"     path="World|Europe|Czech Republic"/>
+      <zone id="26"  name="Hungary"            path="World|Europe|Hungary"/>
+      <zone id="27"  name="Romania"            path="World|Europe|Romania"/>
+      <zone id="28"  name="Russia"             path="World|Europe|Russia"/>
+      <zone id="29"  name="Ukraine"            path="World|Europe|Ukraine"/>
+      <zone id="30"  name="Slovakia"           path="World|Europe|Slovakia"/>
+      <zone id="31"  name="Croatia"            path="World|Europe|Croatia"/>
+      <zone id="32"  name="Serbia"             path="World|Europe|Serbia"/>
+      <zone id="33"  name="Greece"             path="World|Europe|Greece"/>
+      <zone id="34"  name="Bulgaria"           path="World|Europe|Bulgaria"/>
+      <zone id="35"  name="Turkey"             path="World|Europe|Turkey"/>
+      <zone id="36"  name="Ireland"            path="World|Europe|Ireland"/>
+      <zone id="37"  name="Luxembourg"         path="World|Europe|Luxembourg"/>
+      <zone id="38"  name="Iceland"            path="World|Europe|Iceland"/>
+      <zone id="39"  name="Estonia"            path="World|Europe|Estonia"/>
+      <zone id="40"  name="Latvia"             path="World|Europe|Latvia"/>
+      <zone id="41"  name="Lithuania"          path="World|Europe|Lithuania"/>
+      <zone id="42"  name="Slovenia"           path="World|Europe|Slovenia"/>
+      <zone id="43"  name="Bosnia"             path="World|Europe|Bosnia"/>
+      <zone id="44"  name="Albania"            path="World|Europe|Albania"/>
+      <zone id="45"  name="North Macedonia"    path="World|Europe|North Macedonia"/>
+      <zone id="46"  name="Moldova"            path="World|Europe|Moldova"/>
+      <zone id="47"  name="Belarus"            path="World|Europe|Belarus"/>
+      <zone id="48"  name="Malta"              path="World|Europe|Malta"/>
+      <zone id="49"  name="Cyprus"             path="World|Europe|Cyprus"/>
+    </zone>
+
+    <!-- ══════════════  AMERICA  ══════════════ -->
+    <zone id="3" name="America" path="World|America">
+      <zone id="50"  name="United States"      path="World|America|United States">
+        <zone id="5010" name="California"      path="World|America|United States|California"/>
+        <zone id="5011" name="Texas"           path="World|America|United States|Texas"/>
+        <zone id="5012" name="New York"        path="World|America|United States|New York"/>
+        <zone id="5013" name="Florida"         path="World|America|United States|Florida"/>
+        <zone id="5014" name="Illinois"        path="World|America|United States|Illinois"/>
+        <zone id="5015" name="Washington"      path="World|America|United States|Washington"/>
+      </zone>
+      <zone id="51"  name="Canada"             path="World|America|Canada">
+        <zone id="5110" name="Ontario"         path="World|America|Canada|Ontario"/>
+        <zone id="5111" name="Quebec"          path="World|America|Canada|Quebec"/>
+        <zone id="5112" name="British Columbia" path="World|America|Canada|British Columbia"/>
+        <zone id="5113" name="Alberta"         path="World|America|Canada|Alberta"/>
+      </zone>
+      <zone id="52"  name="Brazil"             path="World|America|Brazil"/>
+      <zone id="53"  name="Mexico"             path="World|America|Mexico"/>
+      <zone id="54"  name="Argentina"          path="World|America|Argentina"/>
+      <zone id="55"  name="Chile"              path="World|America|Chile"/>
+      <zone id="56"  name="Colombia"           path="World|America|Colombia"/>
+      <zone id="57"  name="Peru"               path="World|America|Peru"/>
+      <zone id="58"  name="Venezuela"          path="World|America|Venezuela"/>
+      <zone id="59"  name="Ecuador"            path="World|America|Ecuador"/>
+      <zone id="60"  name="Bolivia"            path="World|America|Bolivia"/>
+      <zone id="61"  name="Paraguay"           path="World|America|Paraguay"/>
+      <zone id="62"  name="Uruguay"            path="World|America|Uruguay"/>
+      <zone id="63"  name="Cuba"               path="World|America|Cuba"/>
+      <zone id="64"  name="Puerto Rico"        path="World|America|Puerto Rico"/>
+    </zone>
+
+    <!-- ══════════════  ASIA  ══════════════ -->
+    <zone id="4" name="Asia" path="World|Asia">
+      <zone id="70"  name="China"              path="World|Asia|China"/>
+      <zone id="71"  name="Japan"              path="World|Asia|Japan"/>
+      <zone id="72"  name="South Korea"        path="World|Asia|South Korea"/>
+      <zone id="73"  name="India"              path="World|Asia|India"/>
+      <zone id="74"  name="Taiwan"             path="World|Asia|Taiwan"/>
+      <zone id="75"  name="Singapore"          path="World|Asia|Singapore"/>
+      <zone id="76"  name="Indonesia"          path="World|Asia|Indonesia"/>
+      <zone id="77"  name="Malaysia"           path="World|Asia|Malaysia"/>
+      <zone id="78"  name="Thailand"           path="World|Asia|Thailand"/>
+      <zone id="79"  name="Vietnam"            path="World|Asia|Vietnam"/>
+      <zone id="80"  name="Philippines"        path="World|Asia|Philippines"/>
+      <zone id="81"  name="Pakistan"           path="World|Asia|Pakistan"/>
+      <zone id="82"  name="Bangladesh"         path="World|Asia|Bangladesh"/>
+      <zone id="83"  name="Sri Lanka"          path="World|Asia|Sri Lanka"/>
+      <zone id="84"  name="Myanmar"            path="World|Asia|Myanmar"/>
+      <zone id="85"  name="Nepal"              path="World|Asia|Nepal"/>
+      <zone id="86"  name="Cambodia"           path="World|Asia|Cambodia"/>
+      <zone id="87"  name="Mongolia"           path="World|Asia|Mongolia"/>
+    </zone>
+
+    <!-- ══════════════  OCEANIA  ══════════════ -->
+    <zone id="5" name="Oceania" path="World|Oceania">
+      <zone id="90"  name="Australia"          path="World|Oceania|Australia">
+        <zone id="9010" name="New South Wales"  path="World|Oceania|Australia|New South Wales"/>
+        <zone id="9011" name="Victoria"         path="World|Oceania|Australia|Victoria"/>
+        <zone id="9012" name="Queensland"       path="World|Oceania|Australia|Queensland"/>
+        <zone id="9013" name="Western Australia" path="World|Oceania|Australia|Western Australia"/>
+      </zone>
+      <zone id="91"  name="New Zealand"        path="World|Oceania|New Zealand"/>
+      <zone id="92"  name="Papua New Guinea"   path="World|Oceania|Papua New Guinea"/>
+    </zone>
+
+    <!-- ══════════════  AFRICA  ══════════════ -->
+    <zone id="6" name="Africa" path="World|Africa">
+      <zone id="100" name="South Africa"       path="World|Africa|South Africa"/>
+      <zone id="101" name="Egypt"              path="World|Africa|Egypt"/>
+      <zone id="102" name="Morocco"            path="World|Africa|Morocco"/>
+      <zone id="103" name="Nigeria"            path="World|Africa|Nigeria"/>
+      <zone id="104" name="Kenya"              path="World|Africa|Kenya"/>
+      <zone id="105" name="Ethiopia"           path="World|Africa|Ethiopia"/>
+      <zone id="106" name="Tanzania"           path="World|Africa|Tanzania"/>
+      <zone id="107" name="Algeria"            path="World|Africa|Algeria"/>
+      <zone id="108" name="Tunisia"            path="World|Africa|Tunisia"/>
+      <zone id="109" name="Ghana"              path="World|Africa|Ghana"/>
+      <zone id="120" name="Cameroon"           path="World|Africa|Cameroon"/>
+    </zone>
+
+    <!-- ══════════════  MIDDLE EAST  ══════════════ -->
+    <zone id="7" name="Middle East" path="World|Middle East">
+      <zone id="110" name="Israel"             path="World|Middle East|Israel"/>
+      <zone id="111" name="Saudi Arabia"       path="World|Middle East|Saudi Arabia"/>
+      <zone id="112" name="UAE"                path="World|Middle East|UAE"/>
+      <zone id="113" name="Iran"               path="World|Middle East|Iran"/>
+      <zone id="114" name="Iraq"               path="World|Middle East|Iraq"/>
+      <zone id="115" name="Jordan"             path="World|Middle East|Jordan"/>
+      <zone id="116" name="Lebanon"            path="World|Middle East|Lebanon"/>
+      <zone id="117" name="Kuwait"             path="World|Middle East|Kuwait"/>
+      <zone id="118" name="Qatar"              path="World|Middle East|Qatar"/>
+      <zone id="119" name="Bahrain"            path="World|Middle East|Bahrain"/>
+    </zone>
+
+  </zone>
+</zones>

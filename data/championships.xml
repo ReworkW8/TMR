@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+-->
+<championships count="0">
+  <!--
+  Example:
+  <championship id="1">
+    <n>Community Cup 2026</n>
+    <description>Open for all players</description>
+    <start_date>2026-01-01</start_date>
+    <end_date>2026-12-31</end_date>
+    <mode>TimeAttack</mode>
+    <url></url>
+  </championship>
+  -->
+</championships>

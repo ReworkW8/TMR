@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+-->
+<manialinks>
+
+  <!-- Home / main hub -->
+  <manialink id="home">
+    <n>Home</n>
+    <url>tmr://home</url>
+    <description>TrackMania Rework Home</description>
+  </manialink>
+
+  <!-- News feed (point to your own page if desired) -->
+  <manialink id="news">
+    <n>News</n>
+    <url></url>
+    <description>Latest news</description>
+  </manialink>
+
+  <!-- Ladder / Rankings -->
+  <manialink id="ladder">
+    <n>Ladder</n>
+    <url></url>
+    <description>View rankings</description>
+  </manialink>
+
+  <!-- Championships -->
+  <manialink id="championships">
+    <n>Championships</n>
+    <url></url>
+    <description>Official championships</description>
+  </manialink>
+
+  <!-- Buddy list / social -->
+  <manialink id="buddies">
+    <n>Buddies</n>
+    <url>tmr://buddies</url>
+    <description>Your friends</description>
+  </manialink>
+
+  <!-- Download Tracks -->
+  <manialink id="tracks">
+    <n>Tracks</n>
+    <url></url>
+    <description>Download community tracks</description>
+  </manialink>
+
+</manialinks>

@@ -1,0 +1,13 @@
+{
+  "testplayer": {
+    "password": "test123",
+    "nickname": "TestPlayer",
+    "nation": "World|Europe",
+    "coppers": 10000,
+    "maniacode": "VPXEZDN6",
+    "buddies": [],
+    "avatar_name": "",
+    "avatar_url": "",
+    "avatar_checksum": ""
+  }
+}
