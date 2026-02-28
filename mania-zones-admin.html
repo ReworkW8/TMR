@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mania Zones — Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050810;--surface:#0a0f1e;--panel:#0d1428;--border:#1a2a5e;--accent:#00d4ff;--accent2:#ff6b00;--green:#00ff88;--red:#ff2244;--yellow:#ffcc00;--text:#c8d8ff;--muted:#4a5a8a;--glow:0 0 20px rgba(0,212,255,0.4);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+  body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.15) 2px,rgba(0,0,0,0.15) 4px);pointer-events:none;z-index:1;}
+  .wrapper{position:relative;z-index:2;display:grid;grid-template-rows:auto 1fr auto;min-height:100vh;}
+  header{background:linear-gradient(135deg,#030818,#0a1a3a,#030818);border-bottom:2px solid var(--accent);box-shadow:var(--glow);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:72px;position:sticky;top:0;z-index:100;}
+  .logo{display:flex;align-items:center;gap:1rem;}
+  .logo-icon{width:42px;height:42px;flex-shrink:0;}
+  .logo-icon svg{width:100%;height:100%;}
+  .logo-text h1{font-family:'Orbitron',sans-serif;font-weight:900;font-size:1.2rem;letter-spacing:0.1em;color:#fff;text-shadow:var(--glow);line-height:1;}
+  .logo-text span{font-size:0.65rem;color:var(--accent);letter-spacing:0.25em;text-transform:uppercase;}
+  .header-status{display:flex;align-items:center;gap:1.5rem;font-size:0.75rem;}
+  .status-pill{display:flex;align-items:center;gap:0.5rem;border-radius:20px;padding:0.3rem 0.8rem;transition:all 0.4s;}
+  .status-pill.online{background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.3);color:var(--green);}
+  .status-pill.offline{background:rgba(255,34,68,0.08);border:1px solid rgba(255,34,68,0.3);color:var(--red);}
+  .status-pill.connecting{background:rgba(255,204,0,0.08);border:1px solid rgba(255,204,0,0.3);color:var(--yellow);}
+  .status-dot{width:7px;height:7px;border-radius:50%;animation:pulse 2s infinite;}
+  .status-pill.online .status-dot{background:var(--green);box-shadow:0 0 8px var(--green);}
+  .status-pill.offline .status-dot{background:var(--red);box-shadow:0 0 8px var(--red);}
+  .status-pill.connecting .status-dot{background:var(--yellow);box-shadow:0 0 8px var(--yellow);}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+  .user-avatar{width:32px;height:32px;border-radius:4px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:0.7rem;font-weight:700;color:var(--bg);}
+  .layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 108px);}
+  nav{background:var(--surface);border-right:1px solid var(--border);padding:1.5rem 0;display:flex;flex-direction:column;gap:0.25rem;}
+  .nav-section{padding:0 1rem 0.5rem;font-size:0.6rem;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-top:1rem;}
+  .nav-section:first-child{margin-top:0;}
+  .nav-item{display:flex;align-items:center;gap:0.75rem;padding:0.6rem 1.25rem;cursor:pointer;transition:all 0.15s;font-size:0.8rem;color:var(--muted);border-left:3px solid transparent;text-decoration:none;}
+  .nav-item:hover{background:rgba(0,212,255,0.05);color:var(--text);}
+  .nav-item.active{background:rgba(0,212,255,0.08);color:var(--accent);border-left-color:var(--accent);}
+  .nav-icon{font-size:1rem;width:20px;text-align:center;}
+  .nav-badge{margin-left:auto;color:#fff;font-size:0.6rem;padding:0.1rem 0.4rem;border-radius:10px;font-weight:bold;}
+  .nb-orange{background:var(--accent2);}
+  .nb-red{background:var(--red);}
+  main{padding:2rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.5rem;}
+  .page-title{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:700;color:#fff;text-shadow:var(--glow);letter-spacing:0.05em;display:flex;align-items:center;gap:0.75rem;}
+  .page-title::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
+
+  /* CONNECTION BANNER */
+  .conn-banner{background:rgba(255,34,68,0.08);border:1px solid rgba(255,34,68,0.3);border-radius:4px;padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem;font-size:0.78rem;}
+  .conn-banner.warn{background:rgba(255,204,0,0.08);border-color:rgba(255,204,0,0.3);color:var(--yellow);}
+  .conn-banner.ok{background:rgba(0,255,136,0.06);border-color:rgba(0,255,136,0.25);color:var(--green);}
+  .conn-banner.err{color:var(--red);}
+  .conn-banner-icon{font-size:1.3rem;flex-shrink:0;}
+  .conn-banner-text{flex:1;}
+  .conn-banner-text strong{display:block;margin-bottom:0.2rem;}
+  .conn-banner-text code{background:rgba(0,0,0,0.4);padding:0.1rem 0.4rem;border-radius:2px;font-size:0.72rem;color:var(--accent);}
+
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+  .stat-card{background:var(--panel);border:1px solid var(--border);border-radius:4px;padding:1.25rem;position:relative;overflow:hidden;transition:all 0.2s;}
+  .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--sc);box-shadow:0 0 12px var(--sc);}
+  .stat-card:hover{border-color:var(--sc);}
+  .stat-label{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;}
+  .stat-value{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:700;color:#fff;line-height:1;}
+  .stat-sub{margin-top:0.4rem;font-size:0.7rem;color:var(--muted);}
+  .stat-icon{position:absolute;top:1rem;right:1rem;font-size:1.5rem;opacity:0.15;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+  .panel-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--border);background:rgba(0,212,255,0.03);}
+  .panel-title{font-family:'Orbitron',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;color:var(--accent);text-transform:uppercase;}
+  .btn{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:0.3rem 0.8rem;font-family:'Share Tech Mono',monospace;font-size:0.7rem;cursor:pointer;letter-spacing:0.1em;transition:all 0.15s;border-radius:2px;}
+  .btn:hover{background:var(--accent);color:var(--bg);box-shadow:var(--glow);}
+  .btn:disabled{opacity:0.35;cursor:not-allowed;}
+  .btn:disabled:hover{background:transparent;color:var(--accent);box-shadow:none;}
+  .btn-danger{border-color:var(--red);color:var(--red);}
+  .btn-danger:hover{background:var(--red);color:#fff;box-shadow:0 0 20px rgba(255,34,68,0.4);}
+  .btn-danger:disabled:hover{background:transparent;color:var(--red);}
+  .btn-warn{border-color:var(--yellow);color:var(--yellow);}
+  .btn-warn:hover{background:var(--yellow);color:var(--bg);}
+  .btn-green{border-color:var(--green);color:var(--green);}
+  .btn-green:hover{background:var(--green);color:var(--bg);}
+  .data-table{width:100%;border-collapse:collapse;font-size:0.78rem;}
+  .data-table th{padding:0.6rem 1rem;text-align:left;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);background:rgba(0,0,0,0.2);}
+  .data-table td{padding:0.7rem 1rem;border-bottom:1px solid rgba(26,42,94,0.5);color:var(--text);}
+  .data-table tr:last-child td{border-bottom:none;}
+  .data-table tr:hover td{background:rgba(0,212,255,0.03);}
+  .player-cell{display:flex;align-items:center;gap:0.5rem;}
+  .p-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);flex-shrink:0;}
+  .badge{display:inline-block;padding:0.15rem 0.5rem;border-radius:2px;font-size:0.62rem;font-weight:bold;}
+  .badge-blue{background:rgba(0,212,255,0.12);color:var(--accent);border:1px solid rgba(0,212,255,0.25);}
+  .badge-green{background:rgba(0,255,136,0.12);color:var(--green);border:1px solid rgba(0,255,136,0.25);}
+  .badge-red{background:rgba(255,34,68,0.12);color:var(--red);border:1px solid rgba(255,34,68,0.25);}
+  .badge-yellow{background:rgba(255,204,0,0.12);color:var(--yellow);border:1px solid rgba(255,204,0,0.25);}
+  .badge-orange{background:rgba(255,107,0,0.12);color:var(--accent2);border:1px solid rgba(255,107,0,0.25);}
+  .badge-muted{background:rgba(74,90,138,0.15);color:var(--muted);border:1px solid rgba(74,90,138,0.3);}
+  .ping-good{color:var(--green);}
+  .ping-warn{color:var(--yellow);}
+  .ping-bad{color:var(--red);}
+  .map-item{display:flex;align-items:center;gap:1rem;padding:0.75rem 1.25rem;border-bottom:1px solid rgba(26,42,94,0.5);transition:background 0.15s;}
+  .map-item:last-child{border-bottom:none;}
+  .map-item:hover{background:rgba(0,212,255,0.03);}
+  .map-item:hover .map-btns{opacity:1;}
+  .map-item.now-playing{background:rgba(0,212,255,0.05);border-left:3px solid var(--accent);}
+  .map-thumb{width:48px;height:32px;background:linear-gradient(135deg,#1a2a5e,#0d1428);border:1px solid var(--border);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+  .map-info{flex:1;min-width:0;}
+  .map-name{font-size:0.8rem;color:#fff;margin-bottom:0.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .map-meta{font-size:0.65rem;color:var(--muted);}
+  .map-btns{display:flex;gap:0.35rem;opacity:0;transition:opacity 0.15s;flex-shrink:0;}
+  .map-timer-bar{height:3px;background:rgba(0,212,255,0.08);}
+  .map-timer-fill{height:100%;background:var(--accent);transition:width 0.5s linear;}
+  .log-entry{padding:0.5rem 1.25rem;font-size:0.72rem;display:flex;gap:0.75rem;border-bottom:1px solid rgba(26,42,94,0.3);align-items:flex-start;animation:logIn 0.25s ease;}
+  @keyframes logIn{from{opacity:0;transform:translateX(-6px);}to{opacity:1;}}
+  .log-time{color:var(--muted);flex-shrink:0;width:58px;}
+  .log-type{flex-shrink:0;width:56px;}
+  .log-msg{color:var(--text);word-break:break-all;}
+  .config-grid{display:grid;grid-template-columns:1fr 1fr;}
+  .config-row{display:flex;align-items:center;justify-content:space-between;padding:0.7rem 1.25rem;border-bottom:1px solid rgba(26,42,94,0.5);border-right:1px solid rgba(26,42,94,0.5);font-size:0.75rem;gap:1rem;transition:background 0.15s;}
+  .config-row:hover{background:rgba(0,212,255,0.02);}
+  .config-row:nth-child(even){border-right:none;}
+  .config-key{color:var(--muted);font-size:0.68rem;}
+  .config-val-input{background:transparent;border:none;border-bottom:1px solid transparent;color:var(--accent);font-family:'Orbitron',sans-serif;font-size:0.7rem;outline:none;text-align:right;width:130px;transition:all 0.2s;padding:0.1rem 0.3rem;border-radius:2px;}
+  .config-val-input:focus{border-bottom-color:var(--accent);background:rgba(0,212,255,0.06);}
+  .config-val-select{background:rgba(0,0,0,0.4);border:1px solid var(--border);color:var(--accent);font-family:'Orbitron',sans-serif;font-size:0.7rem;outline:none;padding:0.2rem 0.4rem;border-radius:2px;cursor:pointer;}
+  .config-val-select option{background:#0d1428;}
+  .config-dirty{border-color:var(--yellow)!important;color:var(--yellow)!important;}
+  .toggle{position:relative;width:36px;height:18px;flex-shrink:0;cursor:pointer;display:inline-block;}
+  .toggle input{display:none;}
+  .toggle-track{position:absolute;inset:0;border-radius:10px;transition:all 0.2s;}
+  .t-off .toggle-track{background:var(--border);border:1px solid var(--muted);}
+  .t-on .toggle-track{background:rgba(0,255,136,0.25);border:1px solid var(--green);}
+  .toggle-thumb{position:absolute;width:12px;height:12px;border-radius:50%;top:3px;transition:all 0.2s;}
+  .t-off .toggle-thumb{left:2px;background:var(--muted);}
+  .t-on .toggle-thumb{left:20px;background:var(--green);box-shadow:0 0 8px var(--green);}
+
+  /* CHAT */
+  .chat-row{display:flex;gap:0.5rem;padding:0.75rem 1.25rem;border-top:1px solid var(--border);}
+  .chat-input{flex:1;background:rgba(0,0,0,0.4);border:1px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:0.78rem;padding:0.4rem 0.75rem;border-radius:2px;outline:none;transition:border-color 0.15s;}
+  .chat-input:focus{border-color:var(--accent);}
+  .chat-input::placeholder{color:var(--muted);}
+
+  .bottom-bar{background:var(--surface);border-top:1px solid var(--border);padding:0.5rem 2rem;display:flex;align-items:center;justify-content:space-between;font-size:0.65rem;color:var(--muted);}
+  .ticker{display:flex;align-items:center;gap:0.75rem;overflow:hidden;max-width:500px;}
+  .ticker-label{color:var(--accent);flex-shrink:0;letter-spacing:0.1em;}
+  .ticker-scroll{white-space:nowrap;animation:ticker 30s linear infinite;}
+  @keyframes ticker{from{transform:translateX(100%);}to{transform:translateX(-100vw);}}
+  #toast{position:fixed;bottom:2rem;right:2rem;z-index:999;display:flex;flex-direction:column;gap:0.5rem;}
+  .tmsg{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:0.75rem 1.25rem;font-size:0.75rem;animation:tIn 0.3s ease;display:flex;align-items:center;gap:0.75rem;min-width:250px;box-shadow:0 4px 20px rgba(0,0,0,0.4);}
+  .tok{border-left:3px solid var(--green);}
+  .twarn{border-left:3px solid var(--yellow);}
+  .terr{border-left:3px solid var(--red);}
+  .tinfo{border-left:3px solid var(--accent);}
+  @keyframes tIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--surface);border:1px solid var(--border);border-radius:4px;width:440px;max-width:95vw;animation:mIn 0.2s ease;}
+  @keyframes mIn{from{opacity:0;transform:scale(0.96);}to{opacity:1;transform:scale(1);}}
+  .modal-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--border);}
+  .modal-title{font-family:'Orbitron',sans-serif;font-size:0.8rem;}
+  .modal-close{background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;transition:color 0.15s;}
+  .modal-close:hover{color:#fff;}
+  .modal-body{padding:1.25rem;font-size:0.78rem;color:var(--text);line-height:1.6;}
+  .modal-body code{background:rgba(0,0,0,0.4);padding:0.1rem 0.4rem;border-radius:2px;color:var(--accent);}
+  .modal-footer{display:flex;justify-content:flex-end;gap:0.75rem;padding:1rem 1.25rem;border-top:1px solid var(--border);}
+  .uptime-val{font-family:'Orbitron',sans-serif;color:var(--accent);font-size:0.7rem;}
+  @keyframes flash{0%{color:var(--yellow);}100%{color:#fff;}}
+  .flashing{animation:flash 0.5s ease;}
+  ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:var(--bg);} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;} ::-webkit-scrollbar-thumb:hover{background:var(--accent);}
+  .spin{display:inline-block;animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .empty-row td{text-align:center;color:var(--muted);padding:1.5rem!important;}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <header>
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 42 42" fill="none">
+          <polygon points="21,2 40,11 40,31 21,40 2,31 2,11" fill="none" stroke="#00d4ff" stroke-width="1.5" opacity="0.6"/>
+          <polygon points="21,8 34,14 34,28 21,34 8,28 8,14" fill="none" stroke="#00d4ff" stroke-width="1" opacity="0.4"/>
+          <circle cx="21" cy="21" r="6" fill="#00d4ff" opacity="0.9"/>
+          <circle cx="21" cy="21" r="10" fill="none" stroke="#ff6b00" stroke-width="1" stroke-dasharray="3 3" opacity="0.6">
+            <animateTransform attributeName="transform" type="rotate" from="0 21 21" to="360 21 21" dur="8s" repeatCount="indefinite"/>
+          </circle>
+        </svg>
+      </div>
+      <div class="logo-text"><h1>MANIA ZONES</h1><span>Admin Panel — United 2006</span></div>
+    </div>
+    <div class="header-status">
+      <div class="status-pill connecting" id="srv-pill">
+        <div class="status-dot"></div><span id="srv-status-text">CONNECTING...</span>
+      </div>
+      <div style="color:var(--muted);font-size:0.7rem">SRV: <span style="color:var(--text)" id="hdr-srvname">—</span></div>
+      <div style="color:var(--muted);font-size:0.7rem">UP: <span class="uptime-val" id="uptime-display">00:00:00</span></div>
+      <div style="color:var(--muted);font-size:0.7rem" id="clock">--:--:--</div>
+      <div style="display:flex;align-items:center;gap:0.6rem">
+        <div class="user-avatar">AD</div><span style="font-size:0.75rem">Admin</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav>
+      <div class="nav-section">General</div>
+      <a class="nav-item active" href="mania-zones-admin.html"><span class="nav-icon">⬡</span> Dashboard</a>
+      <a class="nav-item" href="maps.html"><span class="nav-icon">🗺</span> Maps <span class="nav-badge nb-orange" id="nav-map-badge">—</span></a>
+      <a class="nav-item" href="players.html"><span class="nav-icon">👥</span> Players</a>
+      <a class="nav-item" href="rankings.html"><span class="nav-icon">🏆</span> Rankings</a>
+      <div class="nav-section">Zones</div>
+      <a class="nav-item" href="#"><span class="nav-icon">⬡</span> Zone Tree</a>
+      <a class="nav-item" href="zone-stats.html"><span class="nav-icon">📊</span> Zone Stats</a>
+      <div class="nav-section">Server</div>
+      <a class="nav-item" href="#"><span class="nav-icon">📋</span> Logs</a>
+      <a class="nav-item" href="rcon.html"><span class="nav-icon">⚡</span> RCON Commands</a>
+      <a class="nav-item" href="plugins.html"><span class="nav-icon">🔌</span> Plugins</a>
+      <div style="flex:1"></div>
+      <a class="nav-item" href="#" style="color:var(--red)" onclick="openModal('logout-modal');return false"><span class="nav-icon">⏻</span> Logout</a>
+    </nav>
+
+    <main>
+      <div class="page-title">⬡ Dashboard — Mania Zones</div>
+
+      <!-- CONNECTION BANNER -->
+      <div class="conn-banner connecting" id="conn-banner">
+        <div class="conn-banner-icon"><span class="spin">⟳</span></div>
+        <div class="conn-banner-text">
+          <strong>Connecting to bridge server...</strong>
+          Make sure <code>node server.js</code> is running on your TM machine.
+        </div>
+      </div>
+
+      <!-- STAT CARDS -->
+      <div class="stats-grid">
+        <div class="stat-card" style="--sc:var(--accent)">
+          <div class="stat-label">Players Online</div>
+          <div class="stat-value" id="s-players">—</div>
+          <div class="stat-sub" id="s-players-sub">Waiting for server...</div>
+          <div class="stat-icon">👥</div>
+        </div>
+        <div class="stat-card" style="--sc:var(--green)">
+          <div class="stat-label">Max Players</div>
+          <div class="stat-value" id="s-maxplayers">—</div>
+          <div class="stat-sub" id="s-map-name">—</div>
+          <div class="stat-icon">⬡</div>
+        </div>
+        <div class="stat-card" style="--sc:var(--yellow)">
+          <div class="stat-label">Maps in Rotation</div>
+          <div class="stat-value" id="s-maps">—</div>
+          <div class="stat-sub">from server</div>
+          <div class="stat-icon">🗺</div>
+        </div>
+        <div class="stat-card" style="--sc:var(--accent2)">
+          <div class="stat-label">Current Environment</div>
+          <div class="stat-value" id="s-env" style="font-size:1.1rem;padding-top:0.4rem">—</div>
+          <div class="stat-sub" id="s-map-author">—</div>
+          <div class="stat-icon">🏁</div>
+        </div>
+      </div>
+
+      <!-- ROW 1 -->
+      <div class="two-col">
+        <!-- PLAYERS -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">▶ Players Online (<span id="online-count">0</span>)</div>
+            <div style="display:flex;gap:0.5rem">
+              <button class="btn" style="font-size:0.65rem" onclick="refreshPlayers()" id="btn-refresh-players">↻ REFRESH</button>
+              <button class="btn btn-danger" style="font-size:0.65rem" onclick="kickAll()" id="btn-kickall">KICK ALL</button>
+            </div>
+          </div>
+          <table class="data-table">
+            <thead><tr><th>#</th><th>Player</th><th>Zone</th><th>Ping</th><th>Action</th></tr></thead>
+            <tbody id="players-tbody">
+              <tr class="empty-row"><td colspan="5"><span class="spin">⟳</span> Loading players...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- MAPS -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">▶ Map Rotation</div>
+            <div style="display:flex;gap:0.5rem">
+              <button class="btn" style="font-size:0.65rem" onclick="restartMap()" id="btn-restart">↺ RESTART</button>
+              <button class="btn btn-green" style="font-size:0.65rem" onclick="nextMap()" id="btn-next">NEXT ▶</button>
+            </div>
+          </div>
+          <div class="map-timer-bar"><div class="map-timer-fill" id="map-timer" style="width:0%"></div></div>
+          <div id="maps-list">
+            <div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:0.75rem"><span class="spin">⟳</span> Loading maps...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHAT + LOG ROW -->
+      <div class="two-col">
+
+        <!-- LIVE LOG -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">▶ Panel Event Log</div>
+            <div style="display:flex;gap:0.5rem">
+              <button class="btn" style="font-size:0.65rem" id="log-pause-btn" onclick="toggleLogPause()">⏸ PAUSE</button>
+              <button class="btn btn-warn" style="font-size:0.65rem" onclick="clearLog()">CLEAR</button>
+            </div>
+          </div>
+          <div id="log-container" style="max-height:240px;overflow-y:auto"></div>
+          <!-- SERVER CHAT -->
+          <div class="chat-row">
+            <input class="chat-input" id="chat-input" placeholder="Send message to server chat..." maxlength="150"
+              onkeydown="if(event.key==='Enter')sendChat()">
+            <button class="btn btn-green" style="font-size:0.65rem" onclick="sendChat()">SEND</button>
+          </div>
+        </div>
+
+        <!-- SERVER OPTIONS -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">▶ Server Options</div>
+            <div style="display:flex;gap:0.5rem">
+              <button class="btn" style="font-size:0.65rem" onclick="loadServerOptions()">↻ RELOAD</button>
+              <button class="btn btn-green" style="font-size:0.65rem" id="save-btn" onclick="saveServerOptions()">SAVE</button>
+            </div>
+          </div>
+          <div class="config-grid">
+            <div class="config-row"><span class="config-key">SERVER NAME</span><input class="config-val-input" id="cfg-name" value="—" oninput="markDirty(this)"></div>
+            <div class="config-row"><span class="config-key">MAX PLAYERS</span><input class="config-val-input" id="cfg-maxplayers" type="number" value="—" oninput="markDirty(this)"></div>
+            <div class="config-row"><span class="config-key">MAX SPECTATORS</span><input class="config-val-input" id="cfg-maxspec" type="number" value="—" oninput="markDirty(this)"></div>
+            <div class="config-row"><span class="config-key">COMMENT</span><input class="config-val-input" id="cfg-comment" value="—" oninput="markDirty(this)"></div>
+            <div class="config-row"><span class="config-key">PASSWORD</span><input class="config-val-input" id="cfg-password" type="password" placeholder="(unchanged)" oninput="markDirty(this)"></div>
+            <div class="config-row"><span class="config-key">SPEC PASSWORD</span><input class="config-val-input" id="cfg-specpassword" type="password" placeholder="(unchanged)" oninput="markDirty(this)"></div>
+            <div class="config-row" style="grid-column:1/-1;border-right:none"><span class="config-key">LADDER MODE</span>
+              <select class="config-val-select" id="cfg-ladder" onchange="markDirty(this)">
+                <option value="0">Free</option><option value="1">Force Ladders</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="bottom-bar">
+    <div>TM United 2006 • Dedicated 2.11.26 • Bridge v1.0</div>
+    <div class="ticker"><span class="ticker-label">FEED:</span><span class="ticker-scroll" id="ticker-text">Connecting to server...</span></div>
+    <div>Panel v1.0.0 — © 2006 Nadeo</div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- KICK MODAL -->
+<div class="modal-overlay" id="kick-modal">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title" style="color:var(--red)">🚫 Kick Player</div><button class="modal-close" onclick="closeModal('kick-modal')">✕</button></div>
+    <div class="modal-body">Kick <strong id="kick-name" style="color:#fff"></strong> (<code id="kick-login"></code>) from the server?</div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('kick-modal')">CANCEL</button>
+      <button class="btn btn-danger" onclick="executeKick()">CONFIRM KICK</button>
+    </div>
+  </div>
+</div>
+
+<!-- KICKALL MODAL -->
+<div class="modal-overlay" id="kickall-modal">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title" style="color:var(--red)">💥 Kick All Players</div><button class="modal-close" onclick="closeModal('kickall-modal')">✕</button></div>
+    <div class="modal-body">Disconnect all <strong style="color:#fff"><span id="kickall-n">all</span> players</strong> from the server immediately?</div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('kickall-modal')">CANCEL</button>
+      <button class="btn btn-danger" onclick="executeKickAll()">KICK ALL</button>
+    </div>
+  </div>
+</div>
+
+<!-- JUMP MAP MODAL -->
+<div class="modal-overlay" id="jumpmap-modal">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title" style="color:var(--green)">▶ Play Map Now</div><button class="modal-close" onclick="closeModal('jumpmap-modal')">✕</button></div>
+    <div class="modal-body">Switch to <strong id="jumpmap-name" style="color:#fff"></strong> immediately?<br><span style="color:var(--muted);font-size:0.72rem">Current round will end.</span></div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('jumpmap-modal')">CANCEL</button>
+      <button class="btn btn-green" onclick="executeJumpMap()">PLAY NOW</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGOUT MODAL -->
+<div class="modal-overlay" id="logout-modal">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title" style="color:var(--yellow)">⏻ End Session</div><button class="modal-close" onclick="closeModal('logout-modal')">✕</button></div>
+    <div class="modal-body">End this admin session?</div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('logout-modal')">CANCEL</button>
+      <button class="btn btn-danger" onclick="toast('Session ended.','ok');closeModal('logout-modal')">LOGOUT</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  CONFIG — must match server.js BRIDGE_PORT
+// ============================================================
+const API = 'http://localhost:8765/api';
+// If your bridge runs on a different machine, change to e.g.:
+// const API = 'http://192.168.1.50:8765/api';
+
+// ============================================================
+//  STATE
+// ============================================================
+let connected      = false;
+let logPaused      = false;
+let configDirty    = false;
+let pendingKick    = null;   // {login, nickname}
+let pendingJump    = null;   // {fileName, name}
+let mapTimerPct    = 0;
+let uptimeSec      = 0;
+let pollInterval   = null;
+let savedOptions   = {};
+
+let logEntries = [];
+
+const ZONE_BADGE = t => {
+  if(!t) return 'badge-muted';
+  const l = t.toLowerCase();
+  if(l.includes('nadeo')) return 'badge-orange';
+  if(l.includes('black') || l.includes('master')) return 'badge-muted';
+  if(l.includes('red') || l.includes('gold')) return 'badge-red';
+  if(l.includes('blue') || l.includes('silver')) return 'badge-blue';
+  if(l.includes('green')) return 'badge-green';
+  return 'badge-blue';
+};
+
+// ============================================================
+//  API
+// ============================================================
+async function apiFetch(endpoint, opts={}) {
+  try {
+    const res = await fetch(API + endpoint, {
+      ...opts,
+      headers: { 'Content-Type': 'application/json', ...(opts.headers||{}) },
+    });
+    return await res.json();
+  } catch(e) {
+    return { ok: false, error: e.message };
+  }
+}
+
+async function apiGet(ep)       { return apiFetch(ep); }
+async function apiPost(ep, body){ return apiFetch(ep, { method:'POST', body: JSON.stringify(body) }); }
+
+// ============================================================
+//  CONNECTION CHECK
+// ============================================================
+async function checkConnection() {
+  const data = await apiGet('/ping');
+  if (data.ok && data.connected) {
+    setConnected(true, data.serverName || '—');
+  } else if (data.ok && !data.connected) {
+    setConnected(false, '—', 'Bridge running but TM Dedicated not reachable');
+  } else {
+    setConnected(false, '—', 'Bridge server not running — start node server.js');
+  }
+}
+
+function setConnected(ok, srvName, errMsg) {
+  const pill   = document.getElementById('srv-pill');
+  const text   = document.getElementById('srv-status-text');
+  const banner = document.getElementById('conn-banner');
+
+  connected = ok;
+  pill.className = `status-pill ${ok ? 'online' : 'offline'}`;
+  text.textContent = ok ? 'SERVER ONLINE' : 'DISCONNECTED';
+  document.getElementById('hdr-srvname').textContent = srvName || '—';
+
+  if (ok) {
+    banner.className = 'conn-banner ok';
+    banner.innerHTML = `<div class="conn-banner-icon">✓</div>
+      <div class="conn-banner-text"><strong>Connected to ${srvName}</strong>Real-time data from TM Dedicated Server.</div>`;
+    // hide after 4s
+    setTimeout(() => { banner.style.display = 'none'; }, 4000);
+    startPolling();
+  } else {
+    banner.style.display = 'flex';
+    banner.className = 'conn-banner err';
+    banner.innerHTML = `<div class="conn-banner-icon">✕</div>
+      <div class="conn-banner-text">
+        <strong>${errMsg || 'Cannot reach bridge server'}</strong>
+        Run <code>node server.js</code> in the same folder as your TM files, then refresh.
+      </div>`;
+    stopPolling();
+  }
+}
+
+// ============================================================
+//  POLLING — refresh data every 3 seconds
+// ============================================================
+function startPolling() {
+  if (pollInterval) return;
+  pollAll();
+  pollInterval = setInterval(pollAll, 3000);
+}
+
+function stopPolling() {
+  if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
+}
+
+async function pollAll() {
+  await Promise.all([
+    pollStatus(),
+    pollPlayers(),
+    pollMaps(),
+  ]);
+}
+
+async function pollStatus() {
+  const d = await apiGet('/status');
+  if (!d.ok) return;
+
+  document.getElementById('hdr-srvname').textContent  = d.serverName || '—';
+  document.getElementById('s-players').textContent    = d.playerCount ?? '—';
+  document.getElementById('s-maxplayers').textContent = d.maxPlayers  ?? '—';
+  document.getElementById('s-map-name').textContent   = d.map?.name   || '—';
+  document.getElementById('s-env').textContent        = (d.map?.env   || '—').toUpperCase();
+  document.getElementById('s-map-author').textContent = d.map?.author ? 'By: ' + d.map.author : '—';
+
+  // Advance fake timer (server doesn't expose elapsed time via basic API)
+  mapTimerPct = Math.min(mapTimerPct + 1, 100);
+  document.getElementById('map-timer').style.width = mapTimerPct + '%';
+
+  // Ticker
+  document.getElementById('ticker-text').textContent =
+    `${d.playerCount} players online  •  Now playing: ${d.map?.name || '—'}  •  Server: ${d.serverName}  •  Env: ${d.map?.env || '—'}`;
+}
+
+async function pollPlayers() {
+  const d = await apiGet('/players');
+  if (!d.ok) return;
+  renderPlayers(d.players || []);
+}
+
+async function pollMaps() {
+  const d = await apiGet('/maps');
+  if (!d.ok) return;
+  renderMaps(d.maps || [], d.currentUid || '');
+}
+
+// ============================================================
+//  RENDER PLAYERS
+// ============================================================
+function renderPlayers(players) {
+  document.getElementById('online-count').textContent = players.length;
+  document.getElementById('s-players').textContent    = players.length;
+
+  if (players.length === 0) {
+    document.getElementById('players-tbody').innerHTML =
+      `<tr class="empty-row"><td colspan="5">No players online</td></tr>`;
+    return;
+  }
+
+  document.getElementById('players-tbody').innerHTML = players.map((p, i) => {
+    const pc   = p.ping < 60 ? 'ping-good' : p.ping < 120 ? 'ping-warn' : 'ping-bad';
+    const zone = zoneFromPath(p.zone);
+    const spec = p.spectator ? ' <span style="color:var(--muted);font-size:0.6rem">(SPEC)</span>' : '';
+    return `<tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td><div class="player-cell"><div class="p-dot"></div><span style="color:#fff">${escHtml(p.nickname)}${spec}</span></div></td>
+      <td><span class="badge ${ZONE_BADGE(zone)}">${zone}</span></td>
+      <td class="${pc}">${p.ping}ms</td>
+      <td>
+        <button class="btn btn-danger" style="padding:0.15rem 0.5rem;font-size:0.6rem"
+          onclick="openKickModal('${escAttr(p.login)}','${escAttr(p.nickname)}')">KICK</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function zoneFromPath(path) {
+  if (!path) return 'World';
+  const parts = path.split('|');
+  return parts[parts.length - 1] || 'World';
+}
+
+// ============================================================
+//  RENDER MAPS
+// ============================================================
+const ENV_ICONS = {Stadium:'🏟',Desert:'🏜',Rally:'🌲',Snow:'❄️',Island:'🏝',Bay:'⚓',Coast:'🌊'};
+
+function renderMaps(maps, currentUid) {
+  document.getElementById('s-maps').textContent = maps.length;
+  document.getElementById('nav-map-badge').textContent = maps.length;
+
+  if (maps.length === 0) {
+    document.getElementById('maps-list').innerHTML =
+      `<div style="padding:1.5rem;text-align:center;color:var(--muted);font-size:0.75rem">No maps in rotation</div>`;
+    return;
+  }
+
+  document.getElementById('maps-list').innerHTML = maps.map((m) => {
+    const isNow = m.uid === currentUid;
+    const icon  = ENV_ICONS[m.env] || '🏁';
+    const gold  = m.goldTime ? formatTime(m.goldTime) : '—';
+    if (isNow) mapTimerPct = mapTimerPct; // keep timer going
+
+    return `<div class="map-item ${isNow ? 'now-playing' : ''}">
+      <div class="map-thumb">${icon}</div>
+      <div class="map-info">
+        <div class="map-name">${isNow ? '▶ ' : ''}${escHtml(m.name)}</div>
+        <div class="map-meta">By: ${escHtml(m.author)} • Gold: ${gold} • ${m.env}</div>
+      </div>
+      <div class="map-btns">
+        <button class="btn btn-green" style="font-size:0.6rem;padding:0.2rem 0.45rem"
+          onclick="openJumpModal('${escAttr(m.fileName)}','${escAttr(m.name)}')" title="Play now">▶</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function formatTime(ms) {
+  if (!ms || ms <= 0) return '—';
+  const m   = Math.floor(ms / 60000);
+  const s   = Math.floor((ms % 60000) / 1000);
+  const hun = Math.floor((ms % 1000) / 10);
+  return `${m}:${String(s).padStart(2,'0')}.${String(hun).padStart(2,'0')}`;
+}
+
+// ============================================================
+//  PLAYER ACTIONS
+// ============================================================
+function openKickModal(login, nickname) {
+  pendingKick = { login, nickname };
+  document.getElementById('kick-name').textContent  = nickname;
+  document.getElementById('kick-login').textContent = login;
+  openModal('kick-modal');
+}
+
+async function executeKick() {
+  closeModal('kick-modal');
+  if (!pendingKick) return;
+  const d = await apiPost('/kick', { login: pendingKick.login, reason: 'Kicked by admin' });
+  if (d.ok) {
+    addLog('WARN', `${pendingKick.nickname} kicked`);
+    toast(`${pendingKick.nickname} kicked.`, 'warn');
+    pollPlayers();
+  } else {
+    toast('Kick failed: ' + d.error, 'err');
+    addLog('ERR', 'Kick failed: ' + d.error);
+  }
+  pendingKick = null;
+}
+
+function kickAll() {
+  const rows = document.querySelectorAll('#players-tbody tr:not(.empty-row)');
+  document.getElementById('kickall-n').textContent = rows.length;
+  openModal('kickall-modal');
+}
+
+async function executeKickAll() {
+  closeModal('kickall-modal');
+  // Get current players and kick each
+  const d = await apiGet('/players');
+  if (!d.ok) { toast('Failed to get player list','err'); return; }
+  let kicked = 0;
+  for (const p of (d.players || [])) {
+    const r = await apiPost('/kick', { login: p.login, reason: 'Kicked by admin' });
+    if (r.ok) kicked++;
+  }
+  addLog('WARN', `Kicked ${kicked} players`);
+  toast(`${kicked} players kicked.`, 'warn');
+  pollPlayers();
+}
+
+async function refreshPlayers() {
+  toast('Refreshing players...', 'info');
+  await pollPlayers();
+}
+
+// ============================================================
+//  MAP ACTIONS
+// ============================================================
+async function nextMap() {
+  const d = await apiPost('/next-map', {});
+  if (d.ok) {
+    addLog('INFO', 'Switched to next map');
+    toast('Next map loading...', 'info');
+    mapTimerPct = 0;
+    setTimeout(pollAll, 1500);
+  } else {
+    toast('Failed: ' + d.error, 'err');
+  }
+}
+
+async function restartMap() {
+  const d = await apiPost('/restart-map', {});
+  if (d.ok) {
+    addLog('INFO', 'Map restarted');
+    toast('Map restarting...', 'info');
+    mapTimerPct = 0;
+  } else {
+    toast('Failed: ' + d.error, 'err');
+  }
+}
+
+function openJumpModal(fileName, name) {
+  pendingJump = { fileName, name };
+  document.getElementById('jumpmap-name').textContent = name;
+  openModal('jumpmap-modal');
+}
+
+async function executeJumpMap() {
+  closeModal('jumpmap-modal');
+  if (!pendingJump) return;
+  const d = await apiPost('/jump-map', { fileName: pendingJump.fileName });
+  if (d.ok) {
+    addLog('INFO', `Jumped to map: ${pendingJump.name}`);
+    toast(`Playing: ${pendingJump.name}`, 'ok');
+    mapTimerPct = 0;
+    setTimeout(pollAll, 1500);
+  } else {
+    toast('Jump failed: ' + d.error, 'err');
+  }
+  pendingJump = null;
+}
+
+// ============================================================
+//  SERVER OPTIONS
+// ============================================================
+async function loadServerOptions() {
+  const d = await apiGet('/server-options');
+  if (!d.ok) { toast('Failed to load options', 'err'); return; }
+  const o = d.options || {};
+  savedOptions = o;
+  document.getElementById('cfg-name').value       = o.Name             || '';
+  document.getElementById('cfg-maxplayers').value = o.CurrentMaxPlayers|| '';
+  document.getElementById('cfg-maxspec').value    = o.CurrentMaxSpectators || '';
+  document.getElementById('cfg-comment').value    = o.Comment          || '';
+  document.getElementById('cfg-password').value   = '';  // never prefill passwords
+  document.getElementById('cfg-specpassword').value = '';
+  if (o.LadderServerLimitMin !== undefined) {
+    document.getElementById('cfg-ladder').value = o.IsP2PUpload ? '1' : '0';
+  }
+  clearDirty();
+  addLog('INFO', 'Server options loaded');
+}
+
+async function saveServerOptions() {
+  if (!configDirty) { toast('No changes to save.','info'); return; }
+
+  const payload = {
+    ...savedOptions,
+    Name:    document.getElementById('cfg-name').value,
+    CurrentMaxPlayers:    parseInt(document.getElementById('cfg-maxplayers').value) || savedOptions.CurrentMaxPlayers,
+    CurrentMaxSpectators: parseInt(document.getElementById('cfg-maxspec').value)    || savedOptions.CurrentMaxSpectators,
+    Comment: document.getElementById('cfg-comment').value,
+  };
+  const pw    = document.getElementById('cfg-password').value;
+  const specpw= document.getElementById('cfg-specpassword').value;
+  if (pw)     payload.Password         = pw;
+  if (specpw) payload.PasswordForSpectator = specpw;
+
+  const d = await apiPost('/server-options', payload);
+  if (d.ok) {
+    addLog('INFO', 'Server options saved');
+    toast('Options saved!', 'ok');
+    clearDirty();
+    document.getElementById('hdr-srvname').textContent = payload.Name;
+  } else {
+    toast('Save failed: ' + d.error, 'err');
+    addLog('ERR', 'Save options failed: ' + d.error);
+  }
+}
+
+function markDirty(el) {
+  el.classList.add('config-dirty');
+  configDirty = true;
+  const sb = document.getElementById('save-btn');
+  sb.style.borderColor = 'var(--yellow)';
+  sb.style.color = 'var(--yellow)';
+}
+
+function clearDirty() {
+  document.querySelectorAll('.config-dirty').forEach(e=>e.classList.remove('config-dirty'));
+  configDirty = false;
+  const sb = document.getElementById('save-btn');
+  sb.style.borderColor = ''; sb.style.color = '';
+}
+
+// ============================================================
+//  CHAT
+// ============================================================
+async function sendChat() {
+  const inp = document.getElementById('chat-input');
+  const msg = inp.value.trim();
+  if (!msg) return;
+  const d = await apiPost('/chat', { message: msg });
+  if (d.ok) {
+    addLog('CHAT', `[Admin] ${msg}`);
+    toast('Message sent!', 'ok');
+    inp.value = '';
+  } else {
+    toast('Send failed: ' + d.error, 'err');
+  }
+}
+
+// ============================================================
+//  LOG
+// ============================================================
+function addLog(type, msg) {
+  logEntries.push({ t: type, m: msg, time: ts() });
+  if (logEntries.length > 200) logEntries.shift();
+  if (!logPaused) renderLog();
+}
+
+function renderLog() {
+  const BADGE = {INFO:'badge-blue',WARN:'badge-yellow',ERR:'badge-red',REC:'badge-green',CHAT:'badge-orange'};
+  document.getElementById('log-container').innerHTML =
+    [...logEntries].reverse().slice(0, 60).map(e => `
+      <div class="log-entry">
+        <span class="log-time">${e.time}</span>
+        <span class="log-type"><span class="badge ${BADGE[e.t]||'badge-blue'}">${e.t}</span></span>
+        <span class="log-msg">${escHtml(e.m)}</span>
+      </div>`).join('');
+}
+
+function clearLog()        { logEntries = []; renderLog(); toast('Log cleared.','ok'); }
+function toggleLogPause()  {
+  logPaused = !logPaused;
+  const btn = document.getElementById('log-pause-btn');
+  btn.textContent = logPaused ? '▶ RESUME' : '⏸ PAUSE';
+  btn.className   = logPaused ? 'btn btn-warn' : 'btn';
+  if (!logPaused) renderLog();
+}
+
+// ============================================================
+//  TOAST / MODAL
+// ============================================================
+function toast(msg, type='info') {
+  const c   = document.getElementById('toast');
+  const el  = document.createElement('div');
+  el.className = `tmsg t${type}`;
+  const ic  = {ok:'✓',warn:'⚠',err:'✕',info:'ℹ'};
+  const col = {ok:'var(--green)',warn:'var(--yellow)',err:'var(--red)',info:'var(--accent)'};
+  el.innerHTML = `<span style="color:${col[type]}">${ic[type]||'ℹ'}</span> ${escHtml(msg)}`;
+  c.appendChild(el);
+  setTimeout(()=>{ el.style.transition='all 0.3s'; el.style.opacity='0'; el.style.transform='translateX(20px)'; setTimeout(()=>el.remove(),300); }, 2800);
+}
+
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); });
+});
+
+// ============================================================
+//  CLOCK / UPTIME
+// ============================================================
+function ts() { return new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'}); }
+
+function updateClock() {
+  document.getElementById('clock').textContent = ts();
+  uptimeSec++;
+  const h = String(Math.floor(uptimeSec/3600)).padStart(2,'0');
+  const m = String(Math.floor((uptimeSec%3600)/60)).padStart(2,'0');
+  const s = String(uptimeSec%60).padStart(2,'0');
+  document.getElementById('uptime-display').textContent = `${h}:${m}:${s}`;
+}
+
+// ============================================================
+//  SAFETY HELPERS
+// ============================================================
+function escHtml(s)  { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escAttr(s)  { return String(s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
+
+// ============================================================
+//  BOOT
+// ============================================================
+addLog('INFO', 'Panel loaded — connecting to bridge...');
+updateClock();
+setInterval(updateClock, 1000);
+
+// Check connection, retry every 5s until connected
+async function tryConnect() {
+  await checkConnection();
+  if (!connected) {
+    setTimeout(tryConnect, 5000);
+  } else {
+    // Load server options once connected
+    setTimeout(loadServerOptions, 1000);
+  }
+}
+tryConnect();
+</script>
+</body>
+</html>
