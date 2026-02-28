@@ -1,0 +1,19 @@
+{
+  "_readme": "Player accounts for the community master server. Login matching is case-insensitive. Changes take effect immediately without restarting the server.",
+  "users": [
+    {
+      "login":    "player1",
+      "password": "password123",
+      "nickname": "Player 1",
+      "zone":     "World",
+      "coppers":  999999
+    },
+    {
+      "login":    "player2",
+      "password": "password456",
+      "nickname": "Player 2",
+      "zone":     "World",
+      "coppers":  999999
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "_readme": "Game servers that appear in the in-game online server list. 'address' = IP or hostname of the dedicated server.",
+  "servers": [
+    {
+      "name":        "Community Server #1",
+      "address":     "YOUR-DEDICATED-SERVER-IP",
+      "port":        2350,
+      "login":       "server1",
+      "comment":     "TrackMania Rework Community — Have fun!",
+      "nb_players":  0,
+      "max_players": 16,
+      "password":    ""
+    }
+  ]
+}
