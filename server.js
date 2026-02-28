@@ -577,7 +577,7 @@ const httpServer = http.createServer((req, res) => {
 
 httpServer.listen(PORT, '0.0.0.0', () => {
   console.log('═══════════════════════════════════════════════════');
-  console.log('  TrackMania United 2006 - Custom Master Server');
+  console.log('  TrackMania Rework - Master Server');
   console.log(`  Listening on http://0.0.0.0:${PORT}`);
   console.log('  Use TmRework.exe to connect (port 8080)');
   console.log('═══════════════════════════════════════════════════');
