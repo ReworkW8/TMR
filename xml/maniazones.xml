@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<maniazones>
+    <zone name="World">
+        <zone name="Europe">
+            <zone name="Germany" flag="https://reworkw8.github.io/TMR/flags/GER.dds" />
+            <zone name="France" flag="https://reworkw8.github.io/TMR/flags/FRA.dds" />
+        </zone>
+    </zone>
+</maniazones>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<maniacode noconfirmation="0">
+    <install_map>
+        <name></name>
+        <url></url>
+    </install_map>
+    <pay>
+        <login></login>
+        <cost></cost>
+        <message></message>
+    </pay>
+</maniacode>

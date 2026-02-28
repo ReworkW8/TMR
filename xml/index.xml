@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<manialink version="1">
+    <timeout>0</timeout>
+    <quad posn="0 0 -10" sizen="120 90" halign="center" valign="center" style="Bgs1" substyle="BgWindow2"/>
+    <label posn="0 35 1" halign="center" textsize="4" textcolor="ffff" />
+    <label posn="-20 10 1" textsize="3" manialink="https://reworkw8.github.io/TMR/serverlist.xml" />
+    <label posn="20 10 1" textsize="3" manialink="https://reworkw8.github.io/TMR/profile.xml" />
+</manialink>
