@@ -1,0 +1,508 @@
+/* Normal, standard links. */
+a:link, a:visited
+{
+	color: #2764CD;
+	text-decoration: none;
+}
+a:hover
+{
+	color: #323232;
+	text-decoration: underline;
+}
+
+/* Navigation links - for the link tree. */
+.nav
+{
+        font-size: 10px;
+}
+.nav:link, .nav:visited
+{
+	color: #000000;
+	text-decoration: none;
+}
+a.nav:hover
+{
+	color: #cc3333;
+	text-decoration: underline;
+}
+
+/* Tables should show empty cells. */
+table
+{
+	empty-cells: show;
+}
+
+/* By default (td, body..) use Tahoma in black. */
+body, td, th
+{
+	color: #000000;
+	font-size: 11px;
+	font-family: Verdana, sans-serif;
+}
+
+/* The main body of the entire forum. */
+body
+{
+	background-color: #EEEEEE;
+	margin: 0px;
+	padding: 0px;
+}
+
+/* Input boxes - just a bit smaller than normal so they align well. */
+input, textarea, button
+{
+	background-color: white;
+        font-size: 8pt;
+	color: #000000;
+	font-family: tahoma, sans-serif;
+}
+
+/* All input elements that are checkboxes or radio buttons. */
+input.check
+{
+	background-color: #F0F0F0;
+}
+
+/* Selects are a bit smaller, because it makes them look even better 8). */
+select
+{
+	font-size: 8pt;
+	font-weight: normal;
+	color: #000000;
+	font-family: tahoma, sans-serif;
+}
+
+/* Standard horizontal rule.. ([hr], etc.) */
+hr, .hrcolor
+{
+	height: 1px;
+	border: 0;
+	color: #666666;
+	background-color: #666666;
+}
+
+/* A quote, perhaps from another post. */
+.quote
+{
+	color: #000000;
+	background-color: #C3B8D0;
+	border: 1px solid #000000;
+	margin: 1px;
+	padding: 1px;
+	font-size: x-small;
+	line-height: 1.4em;
+}
+
+/* A code block - maybe even PHP ;). */
+.code
+{
+	color: #000000;
+	background-color: #cccccc;
+	font-family: "courier new", "times new roman", monospace;
+	font-size: x-small;
+	line-height: 1.3em;
+	/* Put a nice border around it. */
+	border: 1px solid #000000;
+	margin: 1px auto 1px auto;
+	padding: 1px;
+	width: 99%;
+	/* Don't wrap its contents, and show scrollbars. */
+	white-space: nowrap;
+	overflow: auto;
+	/* Stop after about 24 lines, and just show a scrollbar. */
+	max-height: 24em;
+}
+
+/* The "Quote:" and "Code:" header parts... */
+.quoteheader, .codeheader
+{
+	color: #000000;
+	text-decoration: none;
+	font-style: normal;
+	font-weight: bold;
+	font-size: x-small;
+	line-height: 1.2em;
+}
+
+/* Generally, those [?] icons.  This makes your cursor a help icon. */
+.help
+{
+	cursor: help;
+}
+
+/* /me uses this a lot. (emote, try typing /me in a post.) */
+.meaction
+{
+	color: red;
+}
+
+/* The main post box - this makes it as wide as possible. */
+.editor
+{
+	width: 96%;
+}
+
+/* Highlighted text - such as search results. */
+.highlight
+{
+	background-color: yellow;
+	font-weight: bold;
+	color: black;
+}
+
+/* Alternating backgrounds for posts, and several other sections of the forum. */
+.windowbg, .windowbg3, #preview_body
+{
+	color: #000000;
+	background-color: #F0F0F0;
+}
+.windowbg2
+{
+	color: #000000;
+	background-color: #F5F5F5;
+}
+
+/* These are used primarily for titles, but also for headers (the row that says what everything in the table is.) */
+.titlebg, tr.titlebg th, tr.titlebg td, .titlebg a:link, .titlebg a:visited
+{
+	color: white;
+	font-weight: bold;
+	background-color: #457DDF;
+}
+.titlebg a:hover
+{
+	color: #dfdfdf;
+}
+
+.catbg, .catbg2, .catbg3
+{
+	font-weight: bold;
+	background-color: #EEEEEE;
+	color: #000000;
+}
+
+/* This is used for tables that have a grid/border background color (such as the topic listing.) */
+.bordercolor
+{
+	background-color: #D0D0D0;
+}
+
+/* This is used on tables that should just have a border around them. */
+.tborder
+{
+	border: 1px solid #D0D0D0;
+	background-color: #FFFFFF;
+	padding: 0px;
+}
+
+/* Default font sizes: small (8pt), normal (10pt), and large (14pt). */
+.smalltext
+{
+	font-size: 10px;
+	font-family: tahoma, sans-serif;
+}
+.normaltext
+{
+	font-size: 11px;
+}
+.largetext
+{
+	font-size: 14px;
+}
+
+/* This is the main area of the forum, the part that's gray. */
+#bodyarea
+{
+	background-color: #D4D4D4;
+}
+
+/* Posts and personal messages displayed throughout the forum. */
+.post, .personalmessage
+{
+	width: 100%;
+	overflow: auto;
+	line-height: 1.3em;
+}
+
+/* All the signatures used in the forum.  If your forum users use Mozilla, Opera, or Safari, you might add max-height here ;). */
+.signature
+{
+	width: 100%;
+	overflow: auto;
+	padding-bottom: 3px;
+	line-height: 1.3em;
+}
+
+/* ###!!!CSS ADDED FOR SAF!!!### */
+
+/* The main table of the entire forum. */
+
+.maintable
+{
+	background-color: white;
+	margin: 0px;
+       	padding: 0px 0px 0px 0px;
+	border: #D0D0D0;
+	border-style: solid;
+	border-left-width: 1px;
+        border-top-width: 0px;
+        border-right-width: 1px;
+        border-bottom-width: 0px;
+}
+
+/* The main table of the entire forum. */
+
+.bodytd
+{
+       	padding: 0px 8px 0px 8px;
+       	text-align: left;
+}
+
+/* The header part of the forum. */
+
+.header
+{
+        background-color: #4586DF;
+        background-repeat: no-repeat;
+        background-position: right;
+        padding: 0px 8px 0px 8px;
+        width: 760px;
+        height: 90px;
+        text-align: left;
+        font-family: Verdana, Arial, sans-serif;
+        font-size: 24px;
+        color: white;
+        font-weight: 550;
+}
+
+/* The header part of the forum. */
+
+.headerdown
+{
+        background-color: #F5F5F5;
+        padding: 4px 0px 4px 8px;
+        border: #D0D0D0;
+	border-style: solid;
+	border-left-width: 0px;
+        border-top-width: 1px;
+        border-right-width: 0px;
+        border-bottom-width: 1px;
+        font-size: 10px;
+}
+
+/* The menu */
+
+#navmenu
+{
+        margin: 15px 0px 8px 0px;
+        padding: 0;
+        text-align: center;
+}
+#navmenu ul
+{
+        text-transform: uppercase;
+        margin: 0px;
+        padding: 0;
+}
+#navmenu li
+{
+        display: inline;
+        margin: 0px;
+        padding: 0;
+}
+#navmenu a
+{
+        padding: 1px 10px 1px 10px;
+        margin: 0px 3px 0px 3px;
+        background-color: #FBFBFB;
+        border-top: #DADADA 1px solid;
+        border-left: #4582DF 2px solid;
+        border-bottom: #DADADA 1px solid;
+        border-right: #4582DF 2px solid;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        color: #757575;
+        font-size: 11px;
+}
+#navmenu a:hover
+{
+        background-color: #FFFFFF;
+        color: #000;
+        text-decoration: none;
+}
+#navmenu .active
+{
+        background-color: #FFFFFF;
+        color: #000;
+        text-decoration: none;
+}
+
+/* Other buttons */
+
+.btns
+{
+        margin: 0;
+        padding: 0;
+}
+.btns ul
+{
+        margin: 0;
+        padding: 0;
+}
+.btns li
+{
+        display: inline;
+        margin: 0;
+        padding: 0;
+}
+.btns a:link, .btns a:visited
+{
+        padding: 1px 10px 1px 10px;
+        margin: 0px 0px 0px 3px;
+        background-color: #FBFBFB;
+        border-top: #DADADA 1px solid;
+        border-left: #4582DF 2px solid;
+        border-bottom: #DADADA 1px solid;
+        border-right: #DADADA 1px solid;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        color: #757575;
+        font-size: 11px;
+        text-transform: uppercase;
+}
+.btns a:hover
+{
+        background-color: #FFFFFF;
+        color: #000;
+        text-decoration: none;
+}
+
+/* Message Mod Buttons */
+
+.msgmod
+{
+        margin: 20px 0px 20px 0px;
+        padding: 0;
+        text-align: left;
+}
+.msgmod ul
+{
+        margin: 0;
+        padding: 0;
+}
+.msgmod li
+{
+        display: inline;
+        margin: 0;
+        padding: 0;
+}
+.msgmod a:link, .msgmod a:visited
+{
+        padding: 1px 10px 1px 10px;
+        margin: 0px 3px 0px 0px;
+        background-color: #FBFBFB;
+        border-top: #DADADA 1px solid;
+        border-left: #4582DF 2px solid;
+        border-bottom: #DADADA 1px solid;
+        border-right: #DADADA 1px solid;
+        font-family: Verdana, sans-serif;
+        font-weight: bold;
+        color: #757575;
+        font-size: 8px;
+        text-transform: uppercase;
+}
+.msgmod a:hover
+{
+        background-color: #FFFFFF;
+        color: #000;
+        text-decoration: none;
+}
+
+/* The new icon */
+
+.newicon a:link, .newicon a:visited
+{
+        padding: 0px 4px 1px 4px;
+        margin: 2px;
+        background-color: #FFFFFF;
+        border: #DADADA 1px solid;
+        font-weight: bold;
+        color: #757575;
+        font-size: 8px;
+        text-transform: lowercase;
+}
+
+.newicon a:hover
+{
+        text-decoration: none;
+}
+
+/* The footer part of the forum. */
+
+.footer
+{
+        background-color: #4582DF;
+        width: 100%;
+        border: #D0D0D0;
+	border-style: solid;
+	border-left-width: 0px;
+        border-top-width: 1px;
+        border-right-width: 0px;
+        border-bottom-width: 0px;
+}
+
+/* We use this to adjust the color of the copyright. */
+
+.copyright, .copyright a:link, .copyright a:visited, .copyright a:hover
+{
+        color: #FBFBFB;
+}
+
+/* No image should have a border when linked */
+a img
+{
+   border: 0;
+}
+
+/* The AJAX notifier */
+#ajax_in_progress
+{
+	background: #FFF url(/web/20250504215806im_/http://tm.maniazones.com/forum/Themes/safmc/images/ajaxloading.gif) no-repeat 10%;
+	color: #000;
+	text-align: left;
+	font-size: 18px;
+	font-family: "Trebuchet MS", sans-serif;
+	padding: 10px;
+	padding-left: 65px;
+	position: absolute;
+	left: -105px;
+	width: 105px;
+        border: 1px solid #D0D0D0;
+
+}
+#ajax_center
+{
+	top: 45%;
+	width: 105px;
+	position: absolute;
+	left: 50%;
+}
+/*
+     FILE ARCHIVED ON 21:58:06 May 04, 2025 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 21:18:26 Feb 27, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 0.726
+  exclusion.robots: 0.023
+  exclusion.robots.policy: 0.01
+  esindex: 0.013
+  cdx.remote: 14.831
+  LoadShardBlock: 94.808 (3)
+  PetaboxLoader3.datanode: 118.559 (4)
+  load_resource: 45.364
+*/
