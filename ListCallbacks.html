@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<TITLE>Trackmania callbacks</TITLE>
+</HEAD>
+<BODY>
+<UL>
+	<LI>
+		TrackMania.<B>PlayerConnect</B>(string Login, bool IsSpectator);
+	</LI>
+
+	<LI>
+		TrackMania.<B>PlayerDisconnect</B>(string Login);
+	</LI>
+
+	<LI>
+		TrackMania.<B>PlayerChat</B>(int PlayerUid, string Login, string Text, bool IsRegistredCmd);
+	</LI>
+
+	<LI>
+		TrackMania.<B>PlayerManialinkPageAnswer</B>(int PlayerUid, string Login,  int Answer);<br/>
+		<I>difference with previous TM: this is not called if the player doesn't answer, and thus '0' is also a valid answer.</I>
+	</LI>
+
+	<LI>
+		TrackMania.<B>Echo</B>(string Internal, string Public);
+	</LI>
+	
+	<LI>
+		TrackMania.<B>ServerStart</B>();
+	</LI>
+
+	<LI>
+		TrackMania.<B>ServerStop</B>();
+	</LI>
+
+	<LI>
+		TrackMania.<B>BeginRace</B>(SChallengeInfo Challenge);<br/>
+		<pre>
+	struct SChallengeInfo
+	{
+		string Uid;
+		string Name;
+		string FileName;
+		string Author;
+		string Environnement;
+		string Mood;
+		int BronzeTime;
+		int SilverTime;
+		int GoldTime;
+		int AuthorTime;
+		int CopperPrice;
+		bool LapRace;
+	}</pre>
+		
+	</LI>
+
+	<LI>
+		TrackMania.<B>EndRace</B>(SPlayerRanking Rankings[], SChallengeInfo Challenge);
+		<pre>
+	struct SPlayerRanking {
+		string Login;
+		string NickName;
+		int PlayerId
+
+		int Rank;
+		int BestTime;
+		int[] BestCheckpoints;
+		int Score;
+		int NbrLapsFinished;
+		double LadderScore;
+	}
+	</pre>
+
+	</LI>
+
+	<LI>
+		TrackMania.<B>BeginRound</B>();
+	</LI>
+
+	<LI>
+		TrackMania.<B>StatusChanged</B>(int StatusCode, string StatusName); 
+	
+	</LI>
+
+	<LI>TrackMania.<B>PlayerCheckpoint</B>(int PlayerUid, string Login, int Time, int Score, int CheckpointIndex);
+	</LI>
+
+	<LI>TrackMania.<B>PlayerFinish</B>(int PlayerUid, string Login,	int TimeOrScore);
+	</LI>
+
+	<LI>TrackMania.<B>PlayerIncoherence</B>(int PlayerUid, string Login);
+	</LI>
+
+	<LI>TrackMania.<B>BillUpdated</B>(int BillId, int State, string StateName, int TransactionId);
+	</LI>
+	
+</UL>
+</BODY>
+</HTML>

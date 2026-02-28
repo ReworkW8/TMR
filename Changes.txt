@@ -1,0 +1,37 @@
+2007-02-23:
+- bugfix: no longer autoban players in timeattack with multilaps...
+- bugfix: repaired the stunts mode scores.
+- bugfix: the replays produced by the server are no longer broken.
+
+2007-02-20:
+- The server now reattemps to connect to the master server when the connection is broken. (should fix the problem where the server was runnning and wasn't in the list for the players.)
+- Detection of incoherence in the players time and race -> automatic ban of the player.
+- New callback TrackMania.PlayerIncoherence(PlayerUid, PlayerLogin) for this event
+- Modification of ForceScores(): new parameter SilentMode (only available for SuperAdmin), allowing an external controller to do it's custom score counting.
+
+2007-01-09:
+- GetVersion() now returns "TmUnited" instead of "TmUnited."
+- GetSystemInfo() call, returns IP, ports, and server login
+- fixed a crash
+- AllowChallengeDownload() is now applied during the game. 
+- faster launchtime (the "loading..." step was doing useless work)
+- When removing a challenge and inserting back again, it is now actually read afresh from disk.
+- When saving a matchsetting, the filter::random_map_order is remembered.
+
+2006-12-21:
+- <autosave_replay> setting, in order to save all replays occuring on the server. (albeit in low quality.)
+- GetCoppers() call
+- bugfixes (crash, Pay() return code, ...)
+
+2006-12-07: (needs a patched client)
+- Billing system, to make copper transactions with players. (=> SendBill(), Pay(), GetBillState() )  
+- ChatSendToLanguage(), ChatSendServerMessageToLanguage()
+- ForceSpectator(), ForceSpectatorId()
+- ForcePlayerTeam(), ForcePlayerTeamId()
+- BlackListId(), AddGuestId(), RemoveGuestId()
+- DisplayManialinkPage: you can now add a parent <ManiaLinks> element in order to have several <ManiaLink> with their positions.
+- Sending Chat to a player also displayed the chat to the spectators looking at him.
+- GetManialinkPageAnswers() no longer crashes.
+- You can now display ManialinkPages to each players, and get all the answers..
+- Sometimes the name of the challenge was incorrect.
+- the server can now act as a P2P relay, if the peers don't accept incomming connections.

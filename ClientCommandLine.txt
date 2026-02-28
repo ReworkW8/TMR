@@ -1,0 +1,20 @@
+Client command line joining:
+
+/internet 		Must be specified to join an internet game (that is, not a lan server)
+/join=serveradress	The adress with optional port of the server to join, or the server name.	
+
+optional parameters:
+/login=login		Account login to be used to play online.
+/password=xxx		Account password
+/serverpassword=xxx	If a password is needed to join the match
+
+If any of these parameters is missing, the game will ask them to the player.
+
+parameters to allow more remote controlling:
+/silent			Skip news... to allow joining a server without user interraction
+/team=xxx		("red" or "0" / "blue" or "1") -> set the default player team
+/nickname=xxx		Force nickname
+/profile=xxx		Force using a specific profile on disk. (to avoid the profile choice dialog)
+/key=xxx		Key to use for profile creation.
+
+If not specified, the nickname used is the one stored in the online account.
