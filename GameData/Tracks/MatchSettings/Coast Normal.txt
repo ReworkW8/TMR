@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<playlist>
+	<gameinfos>
+		<game_mode>1</game_mode>
+		<chat_time>10000</chat_time>
+		<finishtimeout>1</finishtimeout>
+		<rounds_pointslimit>50</rounds_pointslimit>
+		<rounds_usenewrules>0</rounds_usenewrules>
+		<rounds_forcedlaps>0</rounds_forcedlaps>
+		<timeattack_limit>240000</timeattack_limit>
+		<timeattack_synchstartperiod>0</timeattack_synchstartperiod>
+		<team_pointslimit>5</team_pointslimit>
+		<team_maxpoints>6</team_maxpoints>
+		<team_usenewrules>0</team_usenewrules>
+		<laps_nblaps>5</laps_nblaps>
+		<laps_timelimit>0</laps_timelimit>
+	</gameinfos>
+
+	<hotseat>
+		<game_mode>0</game_mode>
+		<timeattack_limit>4</timeattack_limit>
+		<rounds_count>5</rounds_count>
+	</hotseat>
+
+	<filter>
+		<is_solo>0</is_solo>
+		<is_hotseat>0</is_hotseat>
+		<is_lan>0</is_lan>
+		<is_internet>1</is_internet>
+		<sort_index>25</sort_index>
+		<random_map_order>0</random_map_order>
+	</filter>
+
+	<challenge>
+		<file>Campaigns\Nadeo\United\Race\Coast\Normal\CoastC1.Challenge.Gbx</file>
+		<ident>GeY0_507YZXNhgEQfhYI7i_aCLd</ident>
+	</challenge>
+	<challenge>
+		<file>Campaigns\Nadeo\United\Race\Coast\Normal\CoastC2.Challenge.Gbx</file>
+		<ident>A2NzvnUxz0wb4gmqZtv67lw9SM3</ident>
+	</challenge>
+	<challenge>
+		<file>Campaigns\Nadeo\United\Race\Coast\Normal\CoastC3.Challenge.Gbx</file>
+		<ident>NvVnDYzN6enW1XTeDNObyTw4TWe</ident>
+	</challenge>
+	<challenge>
+		<file>Campaigns\Nadeo\United\Race\Coast\Normal\CoastC4.Challenge.Gbx</file>
+		<ident>3La8ljzEpqE3uTnTaA4VBHn9xP3</ident>
+	</challenge>
+	<challenge>
+		<file>Campaigns\Nadeo\United\Race\Coast\Normal\CoastC5.Challenge.Gbx</file>
+		<ident>oYCwfKgUWfhx0ZiT3H0zp78Csf8</ident>
+	</challenge>
+</playlist>

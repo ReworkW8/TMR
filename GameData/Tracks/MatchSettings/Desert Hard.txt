@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<playlist>
+	<gameinfos>
+		<game_mode>1</game_mode>
+		<chat_time>10000</chat_time>
+		<finishtimeout>1</finishtimeout>
+		<rounds_pointslimit>50</rounds_pointslimit>
+		<rounds_usenewrules>0</rounds_usenewrules>
+		<rounds_forcedlaps>0</rounds_forcedlaps>
+		<timeattack_limit>300000</timeattack_limit>
+		<timeattack_synchstartperiod>0</timeattack_synchstartperiod>
+		<team_pointslimit>5</team_pointslimit>
+		<team_maxpoints>6</team_maxpoints>
+		<team_usenewrules>0</team_usenewrules>
+		<laps_nblaps>5</laps_nblaps>
+		<laps_timelimit>0</laps_timelimit>
+	</gameinfos>
+
+	<hotseat>
+		<game_mode>0</game_mode>
+		<timeattack_limit>5</timeattack_limit>
+		<rounds_count>5</rounds_count>
+	</hotseat>
+
+	<filter>
+		<is_solo>0</is_solo>
+		<is_hotseat>0</is_hotseat>
+		<is_lan>0</is_lan>
+		<is_internet>1</is_internet>
+		<sort_index>32</sort_index>
+		<random_map_order>0</random_map_order>
+	</filter>
+
+	<challenge>
+		<file>Campaigns\Nadeo\United\Race\Desert\Hard\DesertD1.Challenge.Gbx</file>
+		<ident>JD3rNOcd_zztFZUDLIRYHBw2fSi</ident>
+	</challenge>
+	<challenge>
+		<file>Campaigns\Nadeo\United\Race\Desert\Hard\DesertD2.Challenge.Gbx</file>
+		<ident>spjUHBBBwxXbmz9t28dvsg0Mjsd</ident>
+	</challenge>
+	<challenge>
+		<file>Campaigns\Nadeo\United\Race\Desert\Hard\DesertD3.Challenge.Gbx</file>
+		<ident>H5kJQMsdXjB_FUX9g6HliH872kj</ident>
+	</challenge>
+	<challenge>
+		<file>Campaigns\Nadeo\United\Race\Desert\Hard\DesertD4.Challenge.Gbx</file>
+		<ident>OyBGZZYhTTS2srBwVwR8xpB7g19</ident>
+	</challenge>
+	<challenge>
+		<file>Campaigns\Nadeo\United\Race\Desert\Hard\DesertD5.Challenge.Gbx</file>
+		<ident>JtMRm7HqtomW8t2740PyBx3t5fk</ident>
+	</challenge>
+</playlist>
