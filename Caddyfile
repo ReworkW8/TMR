@@ -1,0 +1,30 @@
+# TMU Master Server – Caddy reverse proxy
+#
+# Caddy automatically provisions TLS via Let's Encrypt.
+# If you only want HTTP (no TLS), replace the hostname lines
+# with   :80 {   and remove the tls directive.
+#
+# The game client connects to masterserver.trackmania.com on port 80.
+# Point that hostname at your server's IP via the players' hosts file.
+
+masterserver.trackmania.com {
+    reverse_proxy localhost:3000 {
+        header_up  Host            {host}
+        header_up  X-Real-IP       {remote_host}
+        header_up  X-Forwarded-For {remote_host}
+    }
+
+    # Log for debugging
+    log {
+        output file /var/log/caddy/tmu-master.log {
+            roll_size    50mb
+            roll_keep    5
+        }
+        format json
+    }
+}
+
+# If you also want to serve bmaster.trackmania.com (server browser mirror)
+# bmaster.trackmania.com {
+#     reverse_proxy localhost:3000 { ... }
+# }
