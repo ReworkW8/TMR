@@ -1,0 +1,199 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Player Accounts ──────────────────────────────────────────────────────────
+model Player {
+  id               String   @id @default(cuid())
+  login            String   @unique          // lowercase
+  passwordMd5      String                    // MD5(password) – what TMR sends
+  nickname         String                    // $-code coloured display name
+  nicknameStripped String                    // plain version for search
+  nation           String   @default("WOR") // ISO-3166-1 alpha-3
+  email            String?  @unique
+  gameKey          String?                   
+
+  // In-game stats
+  ladderPoints     Int      @default(1000)
+  coppers          Int      @default(0)
+  wins             Int      @default(0)
+  losses           Int      @default(0)
+  draws            Int      @default(0)
+  totalPlayTime    Int      @default(0)      // seconds
+
+  // Status
+  isOnline         Boolean  @default(false)
+  isBanned         Boolean  @default(false)
+  banReason        String?
+  banExpiry        DateTime?
+
+  // Timestamps
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  lastLoginAt      DateTime?
+  lastLoginIp      String?
+
+  // Relations
+  sessions         Session[]
+  serversOwned     GameServer[]
+  buddiesOf        Buddy[]    @relation("BuddyPlayer")
+  buddyWith        Buddy[]    @relation("BuddyTarget")
+  trackRecords     TrackRecord[]
+
+  @@index([login])
+  @@index([ladderPoints(sort: Desc)])
+  @@index([nation])
+}
+
+// ─── Sessions ─────────────────────────────────────────────────────────────────
+model Session {
+  id           String   @id @default(cuid())
+  token        String   @unique              // sent to game client
+  playerId     String
+  player       Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  ip           String?
+  gameVersion  String?                       // e.g. "1.0.0.0"
+
+  createdAt    DateTime @default(now())
+  lastSeenAt   DateTime @default(now())
+  expiresAt    DateTime                      // sliding window, updated on each use
+  isActive     Boolean  @default(true)
+
+  @@index([token])
+  @@index([playerId])
+  @@index([expiresAt])
+}
+
+// ─── Game Servers ─────────────────────────────────────────────────────────────
+model GameServer {
+  id               String   @id @default(cuid())
+  serverLogin      String   @unique
+  serverName       String
+  serverComment    String   @default("")
+  serverPassword   String?                   // null = no password
+
+  // Ownership – tied to a player account (optional)
+  ownerLogin       String?
+  owner            Player?  @relation(fields: [ownerLogin], references: [login])
+
+  // Network
+  ip               String
+  port             Int      @default(2350)
+  queryPort        Int      @default(5000)
+
+  // Capacity
+  maxPlayers       Int      @default(32)
+  currentPlayers   Int      @default(0)
+  maxSpectators    Int      @default(10)
+  currentSpecs     Int      @default(0)
+
+  // Game state
+  environment      String   @default("Stadium")  // Stadium, Coast, Bay, Island, Desert, Rally, Snow
+  gameMode         String   @default("TimeAttack")
+  ladderMode       Int      @default(0)           // 0=no ladder, 1=ladder enabled
+  currentMapUid    String?
+  currentMapName   String?
+  nextMapUid       String?
+
+  // Flags
+  isOnline         Boolean  @default(false)
+  isOfficial       Boolean  @default(false)       // Rework-verified server
+  isLadder         Boolean  @default(false)
+  hideServer       Int      @default(0)            // 0=visible,1=hidden,2=private
+  allowRespawn     Boolean  @default(true)
+
+  // Stats
+  totalVisits      Int      @default(0)
+
+  // Timestamps
+  registeredAt     DateTime @default(now())
+  lastHeartbeatAt  DateTime?
+  updatedAt        DateTime @updatedAt
+
+  @@index([isOnline])
+  @@index([environment])
+  @@index([gameMode])
+  @@index([currentPlayers(sort: Desc)])
+}
+
+// ─── Buddy System ─────────────────────────────────────────────────────────────
+model Buddy {
+  id         String   @id @default(cuid())
+  playerId   String
+  player     Player   @relation("BuddyPlayer", fields: [playerId], references: [id], onDelete: Cascade)
+  targetId   String
+  target     Player   @relation("BuddyTarget", fields: [targetId], references: [id], onDelete: Cascade)
+
+  isBlocked  Boolean  @default(false)
+  addedAt    DateTime @default(now())
+
+  @@unique([playerId, targetId])
+  @@index([playerId])
+}
+
+// ─── Track Records ────────────────────────────────────────────────────────────
+model TrackRecord {
+  id          String   @id @default(cuid())
+  playerId    String
+  player      Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  trackUid    String
+  trackName   String?
+  environment String?
+
+  time        Int                          // milliseconds
+  checkpoints String   @default("[]")     // JSON int array
+  respawns    Int      @default(0)
+
+  gameMode    String?
+  serverLogin String?
+
+  setAt       DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([playerId, trackUid])
+  @@index([trackUid, time])
+}
+
+// ─── Server Blacklist ─────────────────────────────────────────────────────────
+model BannedIp {
+  id        String   @id @default(cuid())
+  ip        String   @unique
+  reason    String?
+  bannedAt  DateTime @default(now())
+  expiresAt DateTime?
+}
+
+// ─── Ladder Snapshot (cached rankings) ────────────────────────────────────────
+model LadderSnapshot {
+  id           String   @id @default(cuid())
+  playerId     String   @unique
+  login        String
+  nickname     String
+  nation       String
+  points       Int
+  rank         Int
+  zoneRank     Int?
+  snapshotAt   DateTime @default(now())
+
+  @@index([rank])
+  @@index([points(sort: Desc)])
+  @@index([nation, points(sort: Desc)])
+}
+
+// ─── Announcements (shown in server browser) ──────────────────────────────────
+model Announcement {
+  id        String   @id @default(cuid())
+  message   String
+  lang      String   @default("en")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  expiresAt DateTime?
+}
